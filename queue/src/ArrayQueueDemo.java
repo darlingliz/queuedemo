@@ -155,18 +155,14 @@ class Queque {
 
     /**
      * 出队（通过序号）
-     *在出队的时候并没有真正的删除这个元素，只是用front的
+     *在出队的时候并没有真正删除这个元素，只是用front的
      * 指向表示，front前面的，包括本身都是删除的。
-     * @param orderNum 数组的序号
+     *
      */
-    public int  queueDelete(int orderNum){
+    public int  queueDelete(){
         //如果queue为空，不能删除数。
         if(isEmply()){
             throw new RuntimeException("队列为空");
-        }
-        //在删除元素前检查orderNum是否有效
-        if(orderNum > queueArray.length){
-            throw new RuntimeException("queue的下标越界");
         }
         front++;
         return queueArray[front];
