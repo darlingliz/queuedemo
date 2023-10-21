@@ -48,9 +48,8 @@ public class ArrayQueueDemo {
                     break;
                 case 3:
                     try{
-                        System.out.println("请输入要删除的元素的序号");
-                        int numOrder = scanner.nextInt();
-                        queque.queueDelete(numOrder);
+                     //quequeDelete这里删除相应的实参
+                        queque.queueDelete();
 
                     }catch (Exception e){
                         System.out.println(e.getMessage());
@@ -154,7 +153,7 @@ class Queque {
     }
 
     /**
-     * 出队（通过序号）
+     * 出队
      *在出队的时候并没有真正删除这个元素，只是用front的
      * 指向表示，front前面的，包括本身都是删除的。
      *
