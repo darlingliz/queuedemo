@@ -40,6 +40,21 @@ try {
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
+        System.out.println("=======删除链表节点=======");
+        singleLinkedList.delete(1);
+        singleLinkedList.delete(2);
+        singleLinkedList.delete(3);
+        singleLinkedList.delete(4);
+        singleLinkedList.delete(5);
+        singleLinkedList.delete(6);
+        singleLinkedList.delete(7);
+        try {
+            singleLinkedList.traverse();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+
 
     }
 }
@@ -165,6 +180,41 @@ class SingleLinkedList{
         }
         temp.name = heroNode.name;
         System.out.println(temp.id + "修改成功");
+    }
+
+    /**
+     * 删除链表元素
+     * @param id 对应的链表序号
+     */
+    public void delete(int id){
+        if(head.next == null){
+            System.out.println("链表为空，无法删除");
+            return;
+        }
+        //这里的temp 不能为head.next不然头节点无法删除
+        HeroNode temp = head;
+        //flag是否找到对应的删除的位置
+        Boolean flag = true;
+        while(true){
+            if(temp.next == null){
+                flag = false;
+                break;
+            }
+            if(temp.next.id == id){
+                break;
+            }
+            temp = temp.next;
+        }
+
+        if(flag == false){
+            System.out.println("未找到带删除的节点" + id);
+           return;
+        }
+        /*这里的删除元素只用改变前边的引用就行了，后边的连接不用关
+        因为一个对象如果没有引用的时候，会被垃圾回收机制回收。
+         */
+        temp.next = temp.next.next;
+
     }
 }
 
