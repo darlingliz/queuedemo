@@ -2,6 +2,7 @@ package linkedlist;
 //单链表：单链表中存放的是节点（数据域 和 指针域）
 public class SingleLinkedListDemo {
     public static void main(String[]args){
+        System.out.println("在尾部直接插入");
         HeroNode hero1 = new HeroNode(1, "liz");
         HeroNode hero4 = new HeroNode(4, "peter");
         HeroNode hero7 = new HeroNode(7, "mary");
@@ -11,7 +12,7 @@ public class SingleLinkedListDemo {
         singleLinkedList.add(hero7);
 
 try {
-    singleLinkedList.Traverse();
+    singleLinkedList.traverse();
 }catch(Exception e){
     System.out.println(e.getMessage());
 }
@@ -26,12 +27,19 @@ try {
         singleLinkedList.addById(hero6);
 
         try {
-            singleLinkedList.Traverse();
+            singleLinkedList.traverse();
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
 
-
+        System.out.println("========修改对应的node元素=========");
+        HeroNode king = new HeroNode(1, "king");
+        try {
+            singleLinkedList.update(king);
+            singleLinkedList.traverse();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
     }
 }
@@ -108,7 +116,7 @@ class SingleLinkedList{
     /**
      * 遍历单链表
      */
-     public void Traverse(){
+     public void traverse(){
          HeroNode temp = head;
          //如果单链表只有头元素，无法遍历（头元素的数据域是不用的，只使用指针域）
          if(head.next == null){
@@ -126,6 +134,38 @@ class SingleLinkedList{
              temp = temp.next;
          }
      }
+
+    /**修改链表中的值(要修改的必须是id号相同的才能修改)
+     *
+     * @param heroNode
+     */
+    public void update(HeroNode heroNode){
+         //如果单链表为空，无法修改
+        if(head.next == null){
+            throw  new RuntimeException("链表为空，修改失败");
+        }
+        //链表不为空，则可以从第一个元素开始
+        HeroNode temp = head.next;
+        //flag记录链表中的元素是否有可以修改的状态
+        boolean  flag = true;
+        while(true){
+            if(temp.next == null){
+                flag = false;
+                break;
+            }
+            if(temp.id == heroNode.id){
+                break;
+            }
+            //指针后移
+            temp = temp.next;
+        }
+        if(flag == false){
+            System.out.println("单链表中无此元素，无法修改");
+            return;
+        }
+        temp.name = heroNode.name;
+        System.out.println(temp.id + "修改成功");
+    }
 }
 
 
