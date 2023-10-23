@@ -3,17 +3,33 @@ package linkedlist;
 public class SingleLinkedListDemo {
     public static void main(String[]args){
         HeroNode hero1 = new HeroNode(1, "liz");
-        HeroNode hero2 = new HeroNode(2, "peter");
-        HeroNode hero3 = new HeroNode(3, "mary");
+        HeroNode hero4 = new HeroNode(4, "peter");
+        HeroNode hero7 = new HeroNode(7, "mary");
         SingleLinkedList singleLinkedList = new SingleLinkedList();
         singleLinkedList.add(hero1);
-        singleLinkedList.add(hero2);
-        singleLinkedList.add(hero3);
+        singleLinkedList.add(hero4);
+        singleLinkedList.add(hero7);
+
 try {
     singleLinkedList.Traverse();
 }catch(Exception e){
     System.out.println(e.getMessage());
 }
+        System.out.println("===========按顺序插入===========");
+        HeroNode hero6 = new HeroNode(6, "liz");
+        HeroNode hero2 = new HeroNode(2, "peter");
+        HeroNode hero3 = new HeroNode(3, "mary");
+        singleLinkedList.addById(hero6);
+        singleLinkedList.addById(hero2);
+        singleLinkedList.addById(hero3);
+        singleLinkedList.addById(hero3);
+        singleLinkedList.addById(hero6);
+
+        try {
+            singleLinkedList.Traverse();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
 
 
 
@@ -44,6 +60,50 @@ class SingleLinkedList{
           temp.next = heroNode;
           return true;
      }
+
+    /**按序号的顺序添加元素（序号相等无法添加）
+     *
+     * @param heroNode 要添加的元素
+     */
+    public void addById(HeroNode heroNode){
+        //flag判断是否序号相同的标志
+         Boolean flag = true;
+         HeroNode temp = head;
+         //通过循序找到要插入的元素的位置
+         while(true){
+             //要插入在尾部
+             if(temp.next == null){
+                 break;
+             }
+             /*
+             因为本身这个就是有顺序的，所以只要大于即可找到位置
+             是temp.next.id，如果是temp.id，也可找到位置，但是
+             temp的位置已经在那个要插入的位置的后边了，就无法表示了。
+              */
+             if(temp.next.id > heroNode.id){
+                 break;
+             }
+           //序号相等flag改变
+             if(temp.next.id == heroNode.id){
+                 flag = false;
+                 break;
+             }
+             //没有找到对应的位置，temp指针向后移动。
+             temp = temp.next;
+         }
+         if(flag == false){
+             System.out.println(temp.next.id + "序号已存在，不能添加");
+             return;
+         }
+         /*添加的元素在对应的位置。
+         必须先是 heroNode.next = temp.next;
+         因为temp.next可以表示添加元素的后一个位置，
+         如果先改变的是temp.next = heroNode的话，
+         那后一个元素就表示。
+          */
+         heroNode.next = temp.next;
+         temp.next = heroNode;
+    }
 
     /**
      * 遍历单链表
